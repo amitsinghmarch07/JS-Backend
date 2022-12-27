@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Back End</title>
+        <script >
+            function makeCall() {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://localhost:10000");
+
+                xhr.onreadystatechange = function(event) {
+                    console.log(xhr.response);
+                }
+                xhr.send();
+            }
+
+        </script>
+        </head>
+        <body>
+            <button onclick="makeCall()">Fetch Data</button>
+        </body>
+</html>
