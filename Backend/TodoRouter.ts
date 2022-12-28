@@ -1,4 +1,4 @@
-import express, {Router, Express} from "express";
+import express, {Router, Express, Request, Response} from "express";
 import bodyParser from "body-parser";
 
 class Todo {
@@ -17,7 +17,7 @@ class TodoRouter {
     private todoList: Todo[] = [];
     constructor() {
         this.router = express();
-        this.todoList.push(new Todo(1,"Buy Milk"));
+        this.router.use(bodyParser.urlencoded({extended:false}));
         this.addRoutes();
 
         this.router.listen(this.port, ()=>console.log(`Todo5 started on ${this.port}`));
@@ -38,8 +38,13 @@ class TodoRouter {
             res.sendStatus(404);
       });
 
-      this.router.post("/", (req,res) => {
+      this.router.post("/", (req: Request,res: Response) => {
+        console.log("post mr ayaa");
+        console.log(req.url);
+
         const body = req.body;
+        console.log(req.body);
+        console.log(req.body.todoItem);
         let lastKey = (this.todoList?.at(-1)?.todoKey)! + 1;
         const todo = new Todo(lastKey ?? 1, req.body.todoItem);
         this.todoList.push(todo);

@@ -11,33 +11,52 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TodoRemoteService = void 0;
 class TodoRemoteService {
-    constructor(service) {
-        this.service = service;
+    constructor() {
+        this.url = "http://localhost:10000";
     }
     createTodo(item) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("create todo");
-            throw new Error("Method not implemented.");
+            console.log(JSON.stringify({ todoItem: item }));
+            const result = yield fetch(this.url + "/", {
+                method: "post",
+                mode: "cors",
+                headers: { 'Content-Type': "application/json" },
+                body: JSON.stringify({ todoItem: item })
+            });
+            const response = yield result.json();
+            console.log(response);
+            return response;
         });
     }
     getTodo(todoKey) {
         return __awaiter(this, void 0, void 0, function* () {
-            throw new Error("Method not implemented.");
+            const result = yield fetch(this.url + "/" + todoKey);
+            return result.json();
         });
     }
     getAllTodos() {
         return __awaiter(this, void 0, void 0, function* () {
-            throw new Error("Method not implemented.");
+            return yield (yield fetch(this.url + "/")).json();
         });
     }
     deleteTodo(todoKey) {
         return __awaiter(this, void 0, void 0, function* () {
-            throw new Error("Method not implemented.");
+            const result = yield fetch(this.url + `/${todoKey}`, {
+                method: "delete",
+                mode: "cors"
+            });
+            return yield result.json();
         });
     }
     updateTodo(todoKey, todoItem) {
         return __awaiter(this, void 0, void 0, function* () {
-            throw new Error("Method not implemented.");
+            const result = yield fetch(this.url + `/${todoKey}`, {
+                method: "put",
+                mode: "cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ todoItem: todoItem })
+            });
+            return yield result.json();
         });
     }
 }
