@@ -11,8 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TodoRemoteService = void 0;
 class TodoRemoteService {
-    constructor() {
-        this.url = "http://localhost:10000";
+    constructor(url) {
+        this.url = url;
     }
     createTodo(item) {
         return __awaiter(this, void 0, void 0, function* () {

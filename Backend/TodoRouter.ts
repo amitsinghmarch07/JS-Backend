@@ -17,7 +17,7 @@ class TodoRouter {
     private todoList: Todo[] = [];
     constructor() {
         this.router = express();
-        this.router.use(bodyParser.urlencoded({extended:false}));
+        this.router.use(bodyParser.json());
         this.addRoutes();
 
         this.router.listen(this.port, ()=>console.log(`Todo5 started on ${this.port}`));
@@ -39,26 +39,32 @@ class TodoRouter {
       });
 
       this.router.post("/", (req: Request,res: Response) => {
-        console.log("post mr ayaa");
         console.log(req.url);
 
         const body = req.body;
-        console.log(req.body);
-        console.log(req.body.todoItem);
-        let lastKey = (this.todoList?.at(-1)?.todoKey)! + 1;
+        const length = this.todoList.length;
+        let lastKey = length == 0 ? 1 : (this.todoList!.at(length-1)?.todoKey)! + 1;
+
+        console.log(`last key ${lastKey}`);
         const todo = new Todo(lastKey ?? 1, req.body.todoItem);
         this.todoList.push(todo);
         res.send(todo);
       });
 
       this.router.delete("/:todoKey", (req,res) => {
+
             const found = this.todoList.find(todo => todo.todoKey == +req.params.todoKey);
 
-            if (!found)
+            console.log(`all list ${this.todoList}`);
+
+            if (!found){
                 res.sendStatus(404);
+                console.log(`not deleted 404`);
+      }
             else {
+                console.log(`deleted ${+req.params.todoKey}`);
                 this.todoList = this.todoList.filter(todo => todo.todoKey != +req.params.todoKey);
-                res.send(`Todo ${req.params.todoKey} deleted`);
+                res.send(true);
             }
       });
     }

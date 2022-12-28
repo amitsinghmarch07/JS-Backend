@@ -3,9 +3,10 @@ import { Todo } from "./Todo";
 
 export class TodoRemoteService implements iTodoService {
 
-    url = "http://localhost:10000"
+    private url: string
     
-    constructor() {
+    constructor(url: string) {
+        this.url = url;
     }
 
     async createTodo(item: string): Promise<Todo> {
