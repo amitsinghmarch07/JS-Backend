@@ -1,6 +1,6 @@
 class Animal {
-    eat() {console.log("kha lo kha lo");}
-    sleep() {}
+    eat() { console.log("kha lo kha lo"); }
+    sleep() { }
     procreate() { }
 }
 
@@ -26,7 +26,7 @@ class Sanjay extends Human implements Musician, Developer {
         console.log("sa re ga ma");
     }
     writeCode(): void {
-        console.log("print('Hello World!!')");
+        console.log("print('Hello World!!!')");
     }
 }
 
